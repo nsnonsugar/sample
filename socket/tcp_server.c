@@ -44,7 +44,7 @@ int main()
     }
 
 
-    //  接続の許可
+    // 接続の許可
     errno = 0;
     ret = listen(server_soket, 1); // 同時通信はとりあえず1台まで
     if(ret == -1){
@@ -106,11 +106,18 @@ int main()
                 receive_data.text);
     }
 
-    // ソケットを終了
+    // パケット送受信用ソケットを終了
     errno = 0;
     int status = close(client_soket);
     if(status == -1){
-        printf("close call failed. errno : %d\n", errno);
+        printf("client_soket close call failed. errno : %d\n", errno);
+    }
+
+    // 接続要求待ち受け用ソケットを終了
+    errno = 0;
+    status = close(server_soket);
+    if(status == -1){
+        printf("server_soket close call failed. errno : %d\n", errno);
     }
 
     return 0;
